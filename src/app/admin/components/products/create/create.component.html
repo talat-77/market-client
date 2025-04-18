@@ -1,13 +1,22 @@
 <mat-form-field appearance="fill" class="product-create-input">
-    <mat-label>Name</mat-label >
-    <input matInput #txtName>
-  </mat-form-field>
-  <mat-form-field appearance="fill" class="product-create-input">
-    <mat-label>Price</mat-label>
-    <input matInput #txtPrice>
-  </mat-form-field>
-  <mat-form-field appearance="fill" class="product-create-input">
-    <mat-label>Stock</mat-label>
-    <input matInput #txtStock>
-  </mat-form-field>
-  <button class="btn" color="primary" (click)="create(txtName,txtPrice,txtStock)" mat-flat-button>Basic</button>
+  <mat-label>Name</mat-label>
+  <input matInput #txtName>
+</mat-form-field>
+
+<mat-form-field appearance="fill" class="product-create-input">
+  <mat-label>Price</mat-label>
+  <input matInput #txtPrice>
+</mat-form-field>
+
+<mat-form-field appearance="fill" class="product-create-input">
+  <mat-label>Stock</mat-label>
+  <input matInput #txtStock>
+</mat-form-field>
+
+<!-- Dosya yüklemek için mat-form-field dışında bir alan kullanıldı -->
+<div class="product-create-input">
+  <mat-label>Product Image</mat-label>
+  <input type="file" (change)="onImageSelected($event)">
+</div>
+
+<button class="btn" color="primary" (click)="create(txtName.value, txtPrice.value, txtStock.value)" mat-flat-button>Save Product</button>
