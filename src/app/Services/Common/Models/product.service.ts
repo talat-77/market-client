@@ -4,6 +4,8 @@ import { CreateProduct } from '../../../Contract/Product/create_product';
 import { ListProduct } from '../../../Contract/Product/list_product';
 import { firstValueFrom, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { error } from 'console';
+import { UpdateProduct } from '../../../Contract/Product/update_product';
 
 
 
@@ -59,5 +61,50 @@ export class ProductService {
       throw errorResponse;
     }
   }
+  Delete(id: string, successCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): void {
+    this.httpclient.delete({
+      controller: "products",
+      querystring: `id=${id}`
+    },id)
+    .subscribe({
+      next: () => {
+        if (successCallBack) {
+          successCallBack();
+        }
+      },
+      error: (error) => {
+        if (errorCallBack) {
+          errorCallBack(error?.message || "Bilinmeyen bir hata oluştu.");
+        }
+      }
+    });
+  }
+  Update(
+    id: string,
+    updatedProduct: UpdateProduct,
+    successCallBack?: () => void,
+    errorCallBack?: (errorMessage: string) => void
+  ): void {
+    console.log("API'ye gönderilen ürün id'si:", id);
+    console.log("API'ye gönderilen güncellenmiş ürün:", updatedProduct);
+  
+    this.httpclient.put({
+      controller: "products",
+     
+    }, updatedProduct,id)
+      .subscribe({
+        next: () => {
+          if (successCallBack) successCallBack();
+        },
+        error: (error) => {
+          if (errorCallBack) errorCallBack(error?.message || "Bilinmeyen hata");
+        }
+      });
+  }
+  
+  }
+  
+  
+  
 
-}
+

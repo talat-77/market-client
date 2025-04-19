@@ -3,6 +3,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ListProduct } from '../../../../Contract/Product/list_product';
 import { ProductService } from '../../../../Services/Common/Models/product.service';
+import { error } from 'console';
+import { ProductEventService } from '../../../../Services/Common/Models/productevent.service';
+import { UpdateProduct } from '../../../../Contract/Product/update_product';
+
 
 @Component({
   selector: 'app-list',
@@ -11,32 +15,23 @@ import { ProductService } from '../../../../Services/Common/Models/product.servi
 })
 export class ListComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'stock', 'price', 'updatedDate', 'createdDate'];
+  displayedColumns: string[] = ['name', 'stock', 'price', 'updatedDate', 'createdDate','actions'];
   dataSource: MatTableDataSource<ListProduct> = new MatTableDataSource<ListProduct>();
   totalProductCount: number = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,
+    private productEventService: ProductEventService
+  ) {}
 
   ngAfterViewInit() {
     this.loadProducts(); // ilk sayfa yüklenir
     this.dataSource.paginator = this.paginator;
+    this.productEventService.productCreated$.subscribe(() => {
+      this.loadProducts(); // ürün eklendiğinde tekrar yükle
+    })
   }
-
-  // async loadProducts(page: number = 0, size: number = 5): Promise<void> {
-  //   try {
-  //     // Read metodu ile veriyi al
-  //     const data = await this.productService.read(page, size);
-  
-  //     // Gelen veriler ile dataSource'u güncelle
-  //     this.dataSource.data = data.products;
-  //     this.totalProductCount = data.totalProductCount;
-  //   } catch (err) {
-  //     // Hata durumunda loglama yap
-  //     console.error("Ürünleri çekerken hata oluştu:", err);
-  //   }
-  // }
   loadProducts(page: number = 0, size: number = 5): void {
     this.productService.read(page, size, 
       () => {
@@ -51,38 +46,66 @@ export class ListComponent implements AfterViewInit {
       // Gelen ürün verisini dataSource'a ata
       this.dataSource.data = response.products;
       this.totalProductCount = response.totalProductCount;  // Toplam ürün sayısını güncelle
+      this.dataSource.paginator = this.paginator;  // Paginator'ı güncelle
     }).catch(error => {
-      // Hata durumunda yapılacak işlemler (örneğin bir hata mesajı gösterebilirsiniz)
       console.error('Hata oluştu:', error);
     });
+  }
   
-}
-pageChanged(event: any): void {
-  const pageIndex = event.pageIndex;
-  const pageSize = event.pageSize;
-  this.loadProducts(pageIndex, pageSize);  // Yeni sayfa numarası ve boyutuna göre ürünleri yükler
+  pageChanged(event: any): void {
+    const pageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
+    this.loadProducts(pageIndex, pageSize);  // Yeni sayfa numarası ve boyutuna göre ürünleri yükler
+  }
+  
+onDelete(id: string): void {
+  this.productService.Delete(
+    id,
+    () => {
+      console.log("Silme başarılı");
+      // Silme işleminden sonra, aynı sayfayı tekrar yükleyin:
+      this.loadProducts(this.paginator.pageIndex, this.paginator.pageSize);
+    },
+    (err) => {
+      console.error("Hata:", err);
+    }
+  );
 }
 
+
+onUpdate(product: UpdateProduct): void {
+  const updatedProduct: any = {
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    stock: product.stock
+  };
+
+  // imageUrl varsa ekle
+  if (product.imageUrl !== undefined && product.imageUrl !== null) {
+    updatedProduct.imageUrl = product.imageUrl;
+  }
+
+  this.productService.Update(
+    updatedProduct.id,
+    updatedProduct,
+    () => {
+      console.log("Güncelleme başarılı");
+      this.loadProducts(this.paginator.pageIndex, this.paginator.pageSize);
+    },
+    (err) => {
+      console.error("Hata:", err);
+    }
+  );
 }
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-//   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-//   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-//   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-//   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-//   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-//   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-//   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-//   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-//   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-//   {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-//   {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-//   {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-//   {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-//   {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-//   {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-//   {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-//   {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-//   {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-//   {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-// ];
+
+
+
+
+
+
+
+
+
+
+}
