@@ -18,5 +18,9 @@
   <mat-label>Product Image</mat-label>
   <input type="file" (change)="onImageSelected($event)">
 </div>
+<div *ngIf="imageUrl">
+  <h3>Yüklenen Görsel:</h3>
+  <img [src]="imageUrl" alt="Yüklenen Fotoğraf" width="200">
+</div>
 
 <button class="btn" color="primary" (click)="create(txtName.value, txtPrice.value, txtStock.value)" mat-flat-button>Save Product</button>

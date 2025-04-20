@@ -6,16 +6,11 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { error } from 'console';
 import { UpdateProduct } from '../../../Contract/Product/update_product';
-
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
   constructor(private readonly httpclient:HttpClientService ) { }
-
   Create(
     product: CreateProduct,
     successCallBack?: () => void,
@@ -28,9 +23,7 @@ export class ProductService {
       next: () => {
         if (successCallBack) {
           successCallBack() ; 
-        
-        }
-         
+        }    
       },
       error: (error) => {
         if (errorCallBack) errorCallBack(error?.message || "Bilinmeyen bir hata oluştu.");
