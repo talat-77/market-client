@@ -90,17 +90,19 @@ export class ProductService {
   
     this.httpclient.put({
       controller: "products",
-     
-    }, updatedProduct,id)
-      .subscribe({
-        next: () => {
-          if (successCallBack) successCallBack();
-        },
-        error: (error) => {
-          if (errorCallBack) errorCallBack(error?.message || "Bilinmeyen hata");
-        }
-      });
+      action: id // ✅ id'yi route'a dahil ettik
+    }, updatedProduct)
+    .subscribe({
+      next: () => {
+        if (successCallBack) successCallBack();
+      },
+      error: (error) => {
+        if (errorCallBack) errorCallBack(error?.message || "Bilinmeyen hata");
+      }
+    });
   }
+  
+  
   
   }
   

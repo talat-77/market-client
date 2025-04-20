@@ -1,0 +1,31 @@
+<div mat-dialog-content>
+  <form [formGroup]="form">
+
+    <!-- Dinamik alanlar -->
+    <div *ngFor="let field of config.fields">
+      <mat-form-field class="w-full my-2" appearance="fill">
+        <mat-label>{{ field.label }}</mat-label>
+        <input matInput [type]="field.type" [formControlName]="field.key">
+      </mat-form-field>
+    </div>
+
+    <!-- 🔽 Özel ImageUrl alanı -->
+    <!-- Mevcut Resim -->
+    <div class="my-4">
+      <label>Mevcut Resim:</label><br>
+      <img [src]="form.value.imageUrl" alt="Ürün Resmi" style="max-width: 100%; height: auto;" *ngIf="form.value.imageUrl">
+    </div>
+
+    <!-- Yeni Resim Yükle -->
+    <div class="my-4">
+      <label class="block mt-2">Yeni Resim Yükle:</label>
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+
+  </form>
+</div>
+
+<div mat-dialog-actions class="justify-end">
+  <button mat-button (click)="close()">İptal</button>
+  <button mat-flat-button color="primary" (click)="save()">Kaydet</button>
+</div>

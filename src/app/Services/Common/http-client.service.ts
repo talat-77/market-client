@@ -37,21 +37,13 @@ else
 url = `${this.url(requestParameters)}${requestParameters.querystring ? `/${requestParameters.querystring}`:""}`
 return this.httpclient.post<T>(url,body, {headers:requestParameters.headers,responseType:requestParameters.responseType as 'json'});
   }
-  
-//   put<T>(requestParameters : Partial<RequestParameters>,body:any):Observable<T> {
-// let url : string = "";
-// if(requestParameters.fullendpoint)
-// url=requestParameters.fullendpoint
-// else
-// url=`${this.url(requestParameters)}${requestParameters.querystring ? `/${requestParameters.querystring}`:""}`
-// return this.httpclient.put<T>(url,body,{headers:requestParameters.headers,responseType:requestParameters.responseType as 'json'})
-//   }
+
 put<T>(requestParameters: Partial<RequestParameters>, body: any, id?: string): Observable<T> {
   let url: string = "";
   if (requestParameters.fullendpoint) {
     url = requestParameters.fullendpoint;
   } else {
-    url = `${this.url(requestParameters)}${id ? `/${id}` : ""}`; // ✅ ID'yi path'e ekliyoruz
+    url = `${this.url(requestParameters)}${id ? `/${id}` : ""}`;
   }
   console.log("API'ye gönderilen URL:", url);
   return this.httpclient.put<T>(url, body, {
@@ -59,13 +51,6 @@ put<T>(requestParameters: Partial<RequestParameters>, body: any, id?: string): O
     responseType: requestParameters.responseType as 'json'
   });
 }
-
-
-
-
-
-
-  
   delete<T>(
     requestParameters: Partial<RequestParameters>,
     id: string

@@ -12,11 +12,18 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule, provideHttpClient} from '@angular/common/http';
 import { withFetch } from '@angular/common/http';
+import { UpdateDialogComponent } from './shared/update-dialog/update-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    UpdateDialogComponent,
   
   ],
   imports: [
@@ -26,7 +33,16 @@ import { withFetch } from '@angular/common/http';
     AdminModule,
     UiModule,
   NgxSpinnerModule,
-  HttpClientModule
+  HttpClientModule,
+  ReactiveFormsModule,
+  MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule
+  
+  
+
+  
   ],
   providers: [
     provideClientHydration(),
