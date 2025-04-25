@@ -1,0 +1,46 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <h3 class="card-title mb-4 text-center">Kayıt Ol</h3>
+            <div class="mb-3">
+              <label for="name" class="form-label">Ad Soyad</label>
+              <input type="text" class="form-control" id="name" placeholder="Adınızı girin" formControlName="name">
+              <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="text-danger">
+                Ad Soyad gerekli ve en az 3 karakter olmalıdır.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">E-posta</label>
+              <input type="email" class="form-control" id="email" placeholder="E-posta adresinizi girin" formControlName="email">
+              <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-danger">
+                Geçerli bir e-posta adresi girin.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Şifre</label>
+              <input type="password" class="form-control" id="password" placeholder="Şifre belirleyin" formControlName="password">
+              <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-danger">
+                Şifre gerekli ve en az 6 karakter olmalıdır.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Şifre (Tekrar)</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Şifrenizi tekrar girin" formControlName="confirmPassword">
+              <div *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid" class="text-danger">
+                Şifreler eşleşmeli ve en az 6 karakter olmalıdır.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">Kayıt Ol</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

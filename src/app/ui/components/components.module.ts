@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BasketsModule } from './baskets/baskets.module';
 import { HomeModule } from './home/home.module';
 import { ProductsModule } from './products/products.module';
+import { RegisterModule } from './register/register.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -12,7 +14,9 @@ import { ProductsModule } from './products/products.module';
     CommonModule,
     BasketsModule,
     HomeModule,
-    ProductsModule
+    ProductsModule,
+    RegisterModule,
+   
   ]
 })
 export class ComponentsModule { }
