@@ -6,10 +6,17 @@
           <div class="card-body">
             <h3 class="card-title mb-4 text-center">Kayıt Ol</h3>
             <div class="mb-3">
-              <label for="name" class="form-label">Ad Soyad</label>
+              <label for="name" class="form-label">İsim</label>
               <input type="text" class="form-control" id="name" placeholder="Adınızı girin" formControlName="name">
               <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="text-danger">
                 Ad Soyad gerekli ve en az 3 karakter olmalıdır.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="surname" class="form-label">Soyisim</label>
+              <input type="text" class="form-control" id="surname" placeholder="Soyissminizi girin" formControlName="surname">
+              <div *ngIf="registerForm.get('surname')?.touched && registerForm.get('surname')?.invalid" class="text-danger">
+                 Soyad en az 3 karakter olmalıdır.
               </div>
             </div>
 

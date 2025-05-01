@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterService } from '../../../Services/UI/register.service';
+import { AuthService } from '../../../Services/UI/Auth.service';
 import { Register } from '../../../Contract/UI/register';
 
 @Component({
@@ -11,13 +11,14 @@ import { Register } from '../../../Contract/UI/register';
 export class RegisterComponent implements OnInit {
   registerForm!:FormGroup;
   constructor(private formBuilder:FormBuilder,
-            private registerService:RegisterService) {}
+            private authservice:AuthService) {}
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      surname:['',[Validators.required,Validators.minLength(3)]]
     }, { 
       // Şifre ve onay şifresinin eşleşip eşleşmediğini kontrol ediyoruz
       validator: this.passwordMatchValidator
@@ -32,7 +33,7 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       const registerData: Register = this.registerForm.value;
       
-      this.registerService.registerUser(registerData, 
+      this.authservice.registerUser(registerData, 
         () => {
           console.log('Kullanıcı başarıyla kaydedildi.');
           // Başarılı olduğunda yapılacak işlemler

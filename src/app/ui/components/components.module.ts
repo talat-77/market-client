@@ -4,7 +4,8 @@ import { BasketsModule } from './baskets/baskets.module';
 import { HomeModule } from './home/home.module';
 import { ProductsModule } from './products/products.module';
 import { RegisterModule } from './register/register.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { LoginModule } from './login/login.module';
+
 
 
 
@@ -16,6 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeModule,
     ProductsModule,
     RegisterModule,
+    LoginModule
+    
    
   ]
 })
