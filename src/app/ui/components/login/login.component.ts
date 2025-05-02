@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         // Örnek: JWT token geldiyse localStorage'a kaydet
         if (res.token) {
           localStorage.setItem('token', res.token);
+          localStorage.setItem('expiration', res.expiration);
         }
 
        

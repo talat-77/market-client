@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './admin/layout/layout.component';
 import { DashboardComponent } from './admin/components/dashboard/dashboard.component';
 import { HomeComponent } from './ui/components/home/home.component';
-import { authGuard } from './Guards/auth.guard';
-
+import { authGuard } from './Guard/auth.guard';
 const routes: Routes = [
-  {path:"admin" , component:LayoutComponent, canActivate:[authGuard], children : [
+  {path:"admin" ,
+     component:LayoutComponent,
+      canActivate:[authGuard], 
+      children : [
 
 {path:"", component:DashboardComponent } , //ana component getitirlirken lazy loading yapılanması kullanılmaz . 
 {path:"customers", loadChildren : ()=> import("./admin/components/customers/customers.module").then(module=>module.CustomersModule) }, 

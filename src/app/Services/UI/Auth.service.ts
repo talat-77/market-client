@@ -33,6 +33,5 @@ export class AuthService {
     action:"login"
    },data)
 
-
   }
 }

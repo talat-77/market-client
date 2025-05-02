@@ -1,0 +1,42 @@
+/* Header'ın genel düzeni */
+.header {
+  display: flex;
+  justify-content: flex-end; /* Sağ tarafa yaslamak için */
+  align-items: center;
+  padding: 10px;
+  background-color: #a3aaae;
+  color: white;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 5;
+}
+nav ul li {
+  margin-right: 20px;
+}
+
+/* Kalan süreyi göstermek için */
+.session-time {
+  font-size: 16px;
+  font-weight: bold;
+  color: #4539c8;
+  margin-left: 20px;
+}
+.logoutButton {
+    background-color: transparent;
+    border: none;
+    color: #ffffff; 
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .logoutButton:hover {
+    color: #a71d2a; /* Daha koyu kırmızı */
+  }
+  
+  .logoutButton i {
+    vertical-align: middle;
+  }
